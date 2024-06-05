@@ -8,11 +8,11 @@ Project overview:
 - Requires Java JDK 12 (with JAVA_HOME environment variable set) and Maven
 
 ### Installation
-Install the project with maven
+1. Install the project with maven
 ```
 mvn clean install
 ```
-Then run the app
+2. Then run the app
 ```
 mvn spring-boot:run
 ```

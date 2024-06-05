@@ -33,6 +33,7 @@ public class ApacheCamelRoute extends RouteBuilder {
                 .routeId("camelRoutePost")
                 .process(exchange -> {
                     String body = exchange.getIn().getBody(String.class);
+                    System.out.println("Received Customer: " + body);
                     
                     // we save it into the DB here...
 
