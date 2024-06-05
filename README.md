@@ -5,7 +5,7 @@ Project overview:
 - a REST API for Drones traffic used by the jBPM implementation (run on port 8081)
 - a camel integration routes running on port 8082
 
-- Requires Java JDK 17 (with JAVA_HOME environment variables set) and Maven
+- Requires Java JDK 12 (with JAVA_HOME environment variable set) and Maven
 
 ### Installation
 Install the project with maven

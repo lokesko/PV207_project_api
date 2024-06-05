@@ -14,25 +14,32 @@ public class ApacheCamelRoute extends RouteBuilder {
                 .host("localhost")
                 .port(8082);
 
-        // http://localhost:8082/ticket/integration
-        rest("/ticket")
-                .post("/integration")
+        // http://localhost:8082/customer/new
+        rest("/customer")
+                .post("/new")
                         .consumes("application/json")
                         .produces("text/plain")
-                        .to("direct:integrationRoutePost")
-                .get("/integration")
+                        .to("direct:camelRoutePost")
+                .get("/new")
                         .produces("text/plain")
-                        .to("direct:integrationRouteGet");
+                        .to("direct:camelRouteGet");
 
-        from("direct:integrationRouteGet")
-                .routeId("integrationRouteGet")
+        from("direct:camelRouteGet")
+                .routeId("camelRouteGet")
                 .setHeader(Exchange.HTTP_RESPONSE_CODE, constant(405))
-                .setBody(constant("GET not allowed on this route."));
+                .setBody(constant("Invalid method"));
 
+                from("direct:camelRoutePost")
+                .routeId("camelRoutePost")
+                .process(exchange -> {
+                    String body = exchange.getIn().getBody(String.class);
+                    
+                    // we save it into the DB here...
 
-        from("direct:integrationRoutePost")
-                .routeId("integrationRoutePost")
-                .setHeader(Exchange.HTTP_RESPONSE_CODE, constant(200))
-                .setBody(constant("Successfully triggered a ticket integration route."));
+                    // Mock processing
+                    String response = "Successfully saved the new customer into the DB.";
+                    exchange.getMessage().setBody(response);
+                    exchange.getMessage().setHeader(Exchange.HTTP_RESPONSE_CODE, 200);
+                });
     }
 }
